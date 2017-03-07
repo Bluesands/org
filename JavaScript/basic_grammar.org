@@ -2,10 +2,7 @@
 *** 语句
     JavaScript 程序的执行单位为行(line)，也就是一行一行地执行。一般情况下，每一行就是一个语句。
 语句（statement)是为了完成某种任务而进行的操作，比如下面一行赋值语句：
-#+BEGIN_SRC javascript
-  var a = 1 + 3;
-  console.log(a)
-#+END_SRC
+
 *** 变量
 **** 概念
 **** 变量提升
