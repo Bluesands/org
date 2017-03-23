@@ -1,0 +1,276 @@
+#+TITLE: Backend Development
+
+*** 语言(Python)
+
+**** 静态语言，动态语言，弱类型语言，强类型语言
+
+***** 区别
+***** 举例
+****** Python 是动态强类型语言
+****** Golang 是静态强类型语言
+****** C 是静态弱类型语言
+***** 反射（自省）
+
+**** 并发与并行
+
+***** 区别
+
+***** 举例
+
+****** Erlang,Golang 是天生支持并行的
+
+****** Python 由于 GIL 限制单进程只能并发
+       
+**** Python
+
+***** 推导式与函数式
+      comprehension: list, dict, set
+      函数式：map, filter, reduce 等
+      #+BEGIN_SRC python
+        t_columns = filter(lambda x: x.endswith("_time"), model.FIELDS)
+
+        t_columns = [f for f in models.FIELDS if f.endswith("_time")]
+
+        # 小于０置为０
+        ages = [-1, 10, 20]
+
+        sum([age if age >= 0 else 0 for age in ages])
+
+        # 生成器
+        sum(age if age >= 0 else 0 for age in ages)
+
+        sum(map(lambda age: age if age >= 0 else 0, ages))
+      #+END_SRC
+
+***** 算法
+      1. 排序
+         #+BEGIN_SRC python :results output
+           import operator
+
+           peoples = [{
+               "age": 1,
+               "name": "kehan"
+           }, {
+               "age": 24,
+               "name": "lwy"
+           }, {
+               "age": 25,
+               "name": "skycrab"
+           }]
+
+           # age 从小到大
+           sorted_min_max = sorted(peoples, key=lambda p: p["age"])
+           # age 从大到小
+           sorted_max_min = sorted(peoples, key=lambda p: p["age"], reverse=True)
+
+           print(sorted_min_max)
+           print(sorted_max_min)
+
+           # 使用 operator package
+           sorted_use_operator = sorted(peoples, key=operator.itemgetter("age"))
+           print(sorted_use_operator)
+
+
+           # operator.attrgetter			# 属性
+           # operator.itemgetter			# 元素
+           # operator.methodcaller		# 方法
+         #+END_SRC
+
+           #+RESULTS:
+           : [{'age': 1, 'name': 'kehan'}, {'age': 24, 'name': 'lwy'}, {'age': 25, 'name': 'skycrab'}]
+           : [{'age': 25, 'name': 'skycrab'}, {'age': 24, 'name': 'lwy'}, {'age': 1, 'name': 'kehan'}]
+           : [{'age': 1, 'name': 'kehan'}, {'age': 24, 'name': 'lwy'}, {'age': 25, 'name': 'skycrab'}]
+      2. 最大最小值
+         #+BEGIN_SRC python :results output
+           import operator
+           from collections import defaultdict
+           from functools import reduce
+
+           peoples = [{
+               "age": 1,
+               "name": "kehan"
+           }, {
+               "age": 24,
+               "name": "lwy"
+           }, {
+               "age": 25,
+               "name": "skycrab"
+           }]
+
+           # 最大 age
+           operator_max = max(peoples, key=operator.itemgetter("age"))
+           operator_min = min(peoples, key=operator.itemgetter("age"))
+
+           print(operator_max)
+           print(operator_min)
+
+           # operator package 是一个宝藏
+           a = [1, 2, 3]
+
+           print(reduce(operator.imul, a))
+
+           print(reduce(lambda x, y: x+y, a))
+
+           func_operator = [(x[0], x) for x in dir(operator) if '_' not in x]
+           func_operator_dict = defaultdict(list)
+
+           for k, v in func_operator:
+               func_operator_dict[k].append(v)
+
+           for k, v in func_operator_dict.items():
+               print(k, "-->", v)
+         #+END_SRC
+
+               #+RESULTS:
+               #+begin_example
+               {'age': 25, 'name': 'skycrab'}
+               {'age': 1, 'name': 'kehan'}
+               6
+               6
+               a --> ['abs', 'add', 'attrgetter']
+               c --> ['concat', 'contains', 'countOf']
+               d --> ['delitem']
+               e --> ['eq']
+               f --> ['floordiv']
+               g --> ['ge', 'getitem', 'gt']
+               i --> ['iadd', 'iand', 'iconcat', 'ifloordiv', 'ilshift', 'imatmul', 'imod', 'imul', 'index', 'indexOf', 'inv', 'invert', 'ior', 'ipow', 'irshift', 'isub', 'itemgetter', 'itruediv', 'ixor']
+               l --> ['le', 'lshift', 'lt']
+               m --> ['matmul', 'methodcaller', 'mod', 'mul']
+               n --> ['ne', 'neg']
+               p --> ['pos', 'pow']
+               r --> ['rshift']
+               s --> ['setitem', 'sub']
+               t --> ['truediv', 'truth']
+               x --> ['xor']
+#+end_example
+      3. 二分查找
+         前提：已排序数列
+         #+BEGIN_SRC python :results output
+           import bisect
+
+           a = [1, 5, 10, 15, 20]
+
+           # bisect.bisect_right(a, x) 返回 a 中插入 x 的序号
+           get_index = bisect.bisect_right(a, 11)
+           print(get_index)
+           
+           bisect.insort_right(a, 11)
+           print(a)
+         #+END_SRC
+
+           #+RESULTS:
+           : 3
+           : [1, 5, 10, 11, 15, 20]
+      4. 堆排序
+        解决 TOP N 问题
+         #+BEGIN_SRC python :results output
+           import heapq
+
+           # heapq 是最小值
+           a = [1]
+
+           heapq.heappush(a, 10)
+           print(a)
+           print(heapq.heappop(a))
+         #+END_SRC
+
+           #+RESULTS:
+           : [1, 10]
+           : 1
+
+***** 数据类型，数据结构
+      所有的数据类型都是对象
+      注意：python3 彻底抛弃了 long+int 双整数实现的方法，统一为 int，支持高精度整数运算.
+      1. 64 位操作系统
+         #+BEGIN_SRC python
+           import sys
+
+           int_size = sys.getsizeof(1)
+           str_size = sys.getsizeof("")
+           string_size = sys.getsizeof("hello")
+           empty_list_size = sys.getsizeof([])
+           list_size = sys.getsizeof([1])
+
+           return int_size, str_size, string_size, empty_list_size, list_size
+         #+END_SRC
+
+           #+RESULTS:
+           | 28 | 49 | 54 | 64 | 72 |
+
+      2. 数据结构
+         + list, tuple, dict, set
+
+         + collections.namedtuple, collections.deque, collections.OrderedDict, collections.defaultdict, collections.Counter
+
+         + Queue.Queue
+
+           #+BEGIN_SRC python
+             import collections
+
+             Person = collections.namedtuple('Person', 'name age gender')
+
+             p = Person("kehan", 2, "female")
+
+             return p.name, p.age, p.gender
+           #+END_SRC
+
+             #+RESULTS:
+             | kehan | 2 | female |
+
+      3. 可变与不变
+         #+BEGIN_SRC python
+           def test(l=[1, 2]):
+               l.append(3)
+               return l
+
+           return test()
+
+         #+END_SRC
+
+           #+RESULTS:
+           | 1 | 2 | 3 |
+         
+         #+BEGIN_SRC python
+           persons = {}
+
+           class Person(object):
+               def __init__(self, name):
+                   self.name = name
+
+               def __hash__(self):
+                   return hash(self.name)
+
+               def __eq__(self, r):
+                   return True if r.name == self.name else False
+
+           # kehan = Person("kehan")
+           # persons[kehan] = 1
+           # return kehan in persons
+
+           persons[Person("kehan")] = 1
+           return Person("kehan"), persons
+         #+END_SRC
+
+           #+RESULTS:
+           | <__main__.main.<locals>.Person | object | at | 0x7f8e570b3cc0> | (<__main__.main.<locals>.Person object at 0x7f8e570b3be0>: 1) |
+
+***** 反射
+
+***** 属性拦截
+
+***** 装饰器
+
+***** 描述符和属性
+
+***** 生成器
+
+***** 元类
+
+***** 垃圾回收
+
+***** 多线程与多进程
+
+***** 其他
+*** 操作系统(Linux)
+*** 存储(MySQL)
+*** 领域(Web，数据挖掘，Web 安全，密码技术)

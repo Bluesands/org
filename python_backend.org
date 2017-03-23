@@ -1,0 +1,9 @@
+ #+TITLE: Python Web 后端开发技能汇总
+
+1. 熟悉同步/异步等网络编程模型; 多线程, 协程等并发模型;
+2. 对 sqlalchemy/celery/redispy 等等中间件客户端的二次封装;
+3. SOA (降级, 熔断, 服务注册发现. 软负载....);
+4. 多种组件功能支持: crontab/daemon/thrift server/wsgi server 等等;
+5. 熟练使用 Javascript & CSS & HTML，利用前端框架高效&可靠的实现产品需求;
+6. 能够使用测试工具：pytest / nose / unittest;
+7. 熟悉Django/Tornado/flask等web开发框架
