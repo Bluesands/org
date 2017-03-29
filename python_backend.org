@@ -6,4 +6,17 @@
 4. 多种组件功能支持: crontab/daemon/thrift server/wsgi server 等等;
 5. 熟练使用 Javascript & CSS & HTML，利用前端框架高效&可靠的实现产品需求;
 6. 能够使用测试工具：pytest / nose / unittest;
-7. 熟悉Django/Tornado/flask等web开发框架
+7. 熟悉 Django/Tornado/flask 等 web 开发框架
+
+
+*** 至少熟悉一种 Python Web 框架；
+
+*** 熟悉 Python 语法；
+
+*** 熟悉数据库、缓存、消息队列等技术的使用场景、使用方法等；
+
+*** 有性能调优经验，能快速定位问题；
+
+*** 日常使用 Linux 或 Mac 系统工作；
+
+*** 对 HTML/CSS/JavaScript 有一定了解，有使用经验；
