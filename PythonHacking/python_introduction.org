@@ -100,4 +100,17 @@
     If the implementation is hard to explain, it's a bad idea.
     If the implementation is easy to explain, it may be a good idea.
     Namespaces are one honking great idea -- let's do more of those!
-#+end_example
+		#+end_example
+** 
+*** Data Structures
+    1. 常用数据类型 Common Data Types
+       | Type      | Description | Example                   |
+       |-----------+-------------+---------------------------|
+       | Int       | 整数        | 100                       |
+       | Float     | 浮点数      | 3.14                      |
+       | String    | 字符串      | 'hello'                   |
+       | List      | 列表        | [1, 'hello', [1, 2]]      |
+       | Directory | 字典        | {'t': 'fsdf', 'b': [1, 2} |
+       | Tuple     | 元组        | ('a', 'sfs', 1)           |
+       | Set       | 集合        | {'a', 1, 'b'}             |
+       | Numpy     | 数据        | array([1, 2])             |
